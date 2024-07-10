@@ -1,10 +1,11 @@
 import "./styles.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function App() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
   const [editId, setEditId] = useState(0);
+  const inputRef = useRef(null);
 
   const handleDelete = (id) => {
     const deleteTodo = todos.filter((t) => t.id !== id);
@@ -14,6 +15,7 @@ export default function App() {
   const handleEdit = (id) => {
     const editTodo = todos.find((t) => t.id === id);
     setTodo(editTodo.todo);
+    inputRef.current.focus();
     setEditId(id);
   };
 
@@ -47,6 +49,7 @@ export default function App() {
             className="input"
             type="text"
             value={todo}
+            ref = {inputRef}
             onChange={(e) => setTodo(e.target.value)}
           />
           <button className="button1" type="submit">
